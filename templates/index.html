@@ -1,0 +1,27 @@
+<!doctype html>
+<head>
+  <title>Form</title>
+</head>
+
+<body>
+  <div id="image"></div>
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://' + document.domain + ':' + location.port + '/sign');
+    socket.on('connect', function() {
+        socket.emit('message', {data: 'I\'m connected!'});
+    });
+    socket.on('message', function(msg) {
+      var img = document.createElement("img");
+      img.setAttribute("src", msg.image);
+      img.setAttribute("height", "500");
+      img.setAttribute("width", "500");
+      img.setAttribute("alt", "signature");
+
+      document.getElementById("image").appendChild(img);
+    });
+  </script>
+</body>
+
+</html>
